@@ -140,9 +140,18 @@ class QuantModule(nn.Module):
 
 
 def f_gdn(x, gamma, beta, inverse, gamma_reparam, beta_reparam):
+    # Only use the atomic operator during ONNX export to hide the graph complexity
+    if torch.onnx.is_in_onnx_export():
+        return torch.ops.rdo.gdn(x, gamma, beta, inverse)
+    # Otherwise, perform the full mathematical operation
+    return f_gdn_internal(x, gamma, beta, inverse, gamma_reparam, beta_reparam)
+
+def f_gdn_internal(x, gamma, beta, inverse, gamma_reparam=None, beta_reparam=None):
     _, C, _, _ = x.size()
-    gamma = gamma_reparam(gamma)
-    beta = beta_reparam(beta)
+    if gamma_reparam is not None:
+        gamma = gamma_reparam(gamma)
+    if beta_reparam is not None:
+        beta = beta_reparam(beta)
     gamma = gamma.reshape(C, C, 1, 1)
     norm = F.conv2d(x**2, gamma, beta)
     if inverse:

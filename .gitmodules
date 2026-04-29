@@ -1,0 +1,3 @@
+[submodule "RDO-original"]
+	path = RDO-original
+	url = https://github.com/Eric-qi/RDO-PTQ

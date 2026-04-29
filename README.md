@@ -1,3 +1,31 @@
+# RDO-PTQ ONNX Inspection Fork
+
+> [!IMPORTANT]
+> This repository is a fork of the original RDO-PTQ project.
+
+## Purpose and Scope
+
+This fork is specifically designed to **export and inspect ONNX graphs** to understand the quantization behavior of the Cheng2020 model. 
+
+Key features and modifications in this fork:
+
+- **Atomic ONNX Operations**: Weight and activation quantizers (including GDN) are represented as atomic operations in the ONNX graph for better interpretability in tools like Netron.
+- **Inspection Tools**: Analysis markdown files and export scripts are located in the [`onnx/`](./onnx/) directory.
+- **Code Comparison**: A git submodule of the original repository is included to facilitate direct code comparison.
+
+> [!WARNING]
+> These modifications are intended **strictly for structural inspection and analysis**. Inference and production use are never the goal of this fork.
+
+## Verified Environment
+
+This project has been tested with the following environment:
+
+- **Python**: 3.12.3
+- **PyTorch**: 2.10.0+cu128
+- **ONNX**: 1.21.0
+
+---
+
 # Rate-Distortion Optimized Post-Training Quantization for Learned Image Compression
 
 
